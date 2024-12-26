@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:islami_c13/ui/home/tabs/quran/resources.dart';
 import 'package:islami_c13/ui/home/tabs/quran/sura_widget.dart';
 
-class QuranTab extends StatelessWidget {
-  const QuranTab({super.key});
+class QuranTab extends StatefulWidget {
+  QuranTab({super.key});
+
+  @override
+  State<QuranTab> createState() => _QuranTabState();
+}
+
+class _QuranTabState extends State<QuranTab> {
+  List<int> filteredSuraIndices = List.generate(
+    114,
+    (index) {
+      return index;
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +24,9 @@ class QuranTab extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(
+            onChanged: (newText) {
+              filterSuraListByText(newText);
+            },
             decoration: InputDecoration(
                 hintText: "Search by name",
                 hintStyle: TextStyle(color: Colors.white),
@@ -27,9 +42,9 @@ class QuranTab extends StatelessWidget {
         ),
         Expanded(
           child: ListView.separated(
-            itemCount: QuranResources.arabicQuranSuras.length,
+            itemCount: filteredSuraIndices.length,
             itemBuilder: (context, index) {
-              return SuraWidget(index);
+              return SuraWidget(filteredSuraIndices[index]);
             },
             separatorBuilder: (context, index) => Container(
               color: Colors.white,
@@ -41,5 +56,23 @@ class QuranTab extends StatelessWidget {
         )
       ],
     );
+  }
+
+  void filterSuraListByText(String newText) {
+    List<int> filteredList = [];
+    for (int i = 0; i < QuranResources.englishQuranSurahs.length; i++) {
+      if (QuranResources.englishQuranSurahs[i]
+          .toLowerCase()
+          .contains(newText.toLowerCase())) {
+        filteredList.add(i);
+      } else if (QuranResources.arabicQuranSuras[i]
+          .toLowerCase()
+          .contains(newText.toLowerCase())) {
+        filteredList.add(i);
+      }
+    }
+    setState(() {
+      filteredSuraIndices = filteredList;
+    });
   }
 }
