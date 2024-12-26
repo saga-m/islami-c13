@@ -15,6 +15,8 @@ class AppImages {
   static const String suraTitleBadgeLeft = "assets/images/sura_title_left.png";
   static const String suraTitleBadgeRight =
       "assets/images/sura_title_right.png";
+  static const String mostRecentImage =
+      "assets/images/hadeth_card_background.png";
 }
 
 class AppColors {
