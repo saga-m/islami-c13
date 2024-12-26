@@ -17,6 +17,11 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
   List<String> verses = [];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     int suraIndex = ModalRoute.of(context)?.settings.arguments as int;
     if (verses.isEmpty) {

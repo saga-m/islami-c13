@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:islami_c13/ui/assets.dart';
+import 'package:islami_c13/ui/common/shared_preferences_utils.dart';
 import 'package:islami_c13/ui/home/tabs/quran/resources.dart';
 import 'package:islami_c13/ui/sura_details/sura_details_screen.dart';
 
@@ -12,6 +13,7 @@ class SuraWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        updateMostRecentSuraList(suraIndex);
         Navigator.of(context)
             .pushNamed(SuraDetailsScreen.routeName, arguments: suraIndex);
       },
