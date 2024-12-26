@@ -59,15 +59,16 @@ class _QuranTabState extends State<QuranTab> {
   }
 
   void filterSuraListByText(String newText) {
+    var searchQuery = newText.toLowerCase();
     List<int> filteredList = [];
     for (int i = 0; i < QuranResources.englishQuranSurahs.length; i++) {
       if (QuranResources.englishQuranSurahs[i]
           .toLowerCase()
-          .contains(newText.toLowerCase())) {
+          .contains(searchQuery)) {
         filteredList.add(i);
       } else if (QuranResources.arabicQuranSuras[i]
           .toLowerCase()
-          .contains(newText.toLowerCase())) {
+          .contains(searchQuery)) {
         filteredList.add(i);
       }
     }
