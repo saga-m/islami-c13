@@ -13,7 +13,12 @@ class QuranTab extends StatefulWidget {
 
 class _QuranTabState extends State<QuranTab> {
   List<int> mostRecentList = [];
-
+  List<int> filteredSuraIndices = List.generate(
+    114,
+        (index) {
+      return index;
+    },
+  );
   @override
   void initState() {
     super.initState();
@@ -27,6 +32,9 @@ class _QuranTabState extends State<QuranTab> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(
+            onChanged: (newText) {
+              filterSuraListByText(newText);
+            },
             decoration: InputDecoration(
                 hintText: "Search by name",
                 hintStyle: TextStyle(color: Colors.white),
@@ -55,9 +63,9 @@ class _QuranTabState extends State<QuranTab> {
         ),
         Expanded(
           child: ListView.separated(
-            itemCount: QuranResources.arabicQuranSuras.length,
+            itemCount: filteredSuraIndices.length,
             itemBuilder: (context, index) {
-              return SuraWidget(index);
+              return SuraWidget(filteredSuraIndices[index]);
             },
             separatorBuilder: (context, index) => Container(
               color: Colors.white,
@@ -87,6 +95,25 @@ class _QuranTabState extends State<QuranTab> {
     print("updating most recent");
     setState(() {
       this.mostRecentList = indicesList;
+    });
+  }
+
+  void filterSuraListByText(String newText) {
+    var searchQuery = newText.toLowerCase();
+    List<int> filteredList = [];
+    for (int i = 0; i < QuranResources.englishQuranSurahs.length; i++) {
+      if (QuranResources.englishQuranSurahs[i]
+          .toLowerCase()
+          .contains(searchQuery)) {
+        filteredList.add(i);
+      } else if (QuranResources.arabicQuranSuras[i]
+          .toLowerCase()
+          .contains(searchQuery)) {
+        filteredList.add(i);
+      }
+    }
+    setState(() {
+      filteredSuraIndices = filteredList;
     });
   }
 }
